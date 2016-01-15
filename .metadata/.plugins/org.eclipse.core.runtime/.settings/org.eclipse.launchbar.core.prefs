@@ -1,0 +1,4 @@
+configDescList=org.eclipse.launchbar.core.descriptorType.default\:Generate Language Infrastructure (istic.idm.project),org.eclipse.launchbar.core.descriptorType.default\:Launch Runtime Eclipse,org.eclipse.launchbar.core.descriptorType.default\:istic.idm.project.tests
+eclipse.preferences.version=1
+org.eclipse.launchbar.core.descriptorType.default\:Generate\ Language\ Infrastructure\ (istic.idm.project)/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:Generate\ Language\ Infrastructure\ (istic.idm.project)/activeLaunchTarget=org.eclipse.remote.LocalServices\:Local

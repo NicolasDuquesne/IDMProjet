@@ -1,0 +1,9 @@
+grammar istic.idm.project.VideoGen with org.eclipse.xtext.common.Terminals
+
+generate videoGen "http://www.idm.istic/project/VideoGen"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';

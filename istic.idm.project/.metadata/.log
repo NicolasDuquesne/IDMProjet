@@ -1,0 +1,30 @@
+!SESSION 2016-01-13 08:07:30.814 -----------------------------------------------
+eclipse.buildId=4.5.0.I20150603-2000
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=fr_FR
+Framework arguments:  -product org.eclipse.platform.ide
+Command-line arguments:  -product org.eclipse.platform.ide -data /home/nduquesne/ISTIC/Cours/IDM/Projet/istic.idm.project -dev file:/home/nduquesne/ISTIC/Cours/IDM/Projet/.metadata/.plugins/org.eclipse.pde.core/Launch Runtime Eclipse/dev.properties -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.launchbar.core 2 0 2016-01-13 08:07:34.788
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.arduino.core.descriptorType
+!SESSION 2016-01-13 08:11:34.618 -----------------------------------------------
+eclipse.buildId=4.5.0.I20150603-2000
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=fr_FR
+Framework arguments:  -product org.eclipse.platform.ide
+Command-line arguments:  -product org.eclipse.platform.ide -data /home/nduquesne/ISTIC/Cours/IDM/Projet/istic.idm.project -dev file:/home/nduquesne/ISTIC/Cours/IDM/Projet/.metadata/.plugins/org.eclipse.pde.core/Launch Runtime Eclipse/dev.properties -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.launchbar.core 2 0 2016-01-13 08:11:38.689
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.arduino.core.descriptorType
+!SESSION 2016-01-13 08:11:58.459 -----------------------------------------------
+eclipse.buildId=4.5.0.I20150603-2000
+java.version=1.8.0_60
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=fr_FR
+Framework arguments:  -product org.eclipse.platform.ide
+Command-line arguments:  -product org.eclipse.platform.ide -data /home/nduquesne/ISTIC/Cours/IDM/Projet/istic.idm.project -dev file:/home/nduquesne/ISTIC/Cours/IDM/Projet/.metadata/.plugins/org.eclipse.pde.core/Launch Runtime Eclipse/dev.properties -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.launchbar.core 2 0 2016-01-13 08:12:02.912
+!MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.arduino.core.descriptorType

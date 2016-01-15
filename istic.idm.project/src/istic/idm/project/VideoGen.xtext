@@ -1,0 +1,21 @@
+grammar istic.idm.project.VideoGen with org.eclipse.xtext.common.Terminals
+
+generate videoGen "http://www.idm.istic/project/VideoGen"
+
+VideoGen:
+	'VideoGen {' type+=type* '}';
+	
+type:
+	mandatory | optional | alternatives;
+
+mandatory:
+	'mandatory' videoseq;
+
+optional:
+	'optional' videoseq;
+	
+alternatives:
+	'alternatives' id=ID '{' videoseq+=videoseq+ '}';
+	
+videoseq:
+	'videoseq' id=ID? text=STRING;

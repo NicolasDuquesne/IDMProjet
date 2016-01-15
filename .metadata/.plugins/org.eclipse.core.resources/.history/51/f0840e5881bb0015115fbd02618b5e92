@@ -1,0 +1,167 @@
+package istic.idm.project.transformation
+
+import edu.istic.VideoGenStandaloneSetupGenerated
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.emf.common.util.URI
+import edu.istic.videoGen.VideoGen
+
+import edu.istic.videoGen.*
+import edu.istic.videoGen.impl.VideoSeqMandatoryImpl
+import edu.istic.util.Util
+import edu.istic.util.FileHelper
+import playlist.PlaylistFactory
+import org.eclipse.emf.common.util.EList
+import playlist.Video
+import playlist.Playlist
+import java.util.ArrayList
+import java.util.List
+
+class PlaylistTransformer {
+	/**
+	 * Main method, startup point of the program
+	 */
+	def static void main(String[] args) {
+		// TODO Auto-generated method stub
+		var videogen = loadVideoGen(URI.createFileURI("jawad.videogen"));
+		var playlist = transformToPlaylist(videogen)
+		playlistToFFMpeg(playlist, "JAWAD.ffmpeg")
+		playlistToM3u(playlist, "JAWAD.m3u")
+		
+	}
+
+	def static playlistToFFMpeg(Playlist playlist, String outputFile) {
+		FileHelper.createOrResetFileObject(outputFile)
+		
+		playlist.videos.filter(Video).forEach[v|{
+			var line = "file '" + v.uri + "'\n"
+			FileHelper.writeFileObject(outputFile, line)
+		}]
+	}
+	
+	def static playlistToM3u(Playlist playlist, String outputFile) {
+		FileHelper.createOrResetFileObject(outputFile)
+		
+		FileHelper.writeFileObject(outputFile, "#EXTM3U")
+		
+		playlist.videos.filter(Video).forEach[v|{
+			var lines = "#EXT-X-DISCONTINUITY\n#EXTINF:"+v.durationInSeconds+"\n" + v.uri + "\n"
+			FileHelper.writeFileObject(outputFile, lines)
+		}]
+		
+		FileHelper.writeFileObject(outputFile, "#EXT-X-ENDLIST")
+		
+	}
+		
+	def static transformToFFMpeg(String inputFile, String outputFile) {
+		var videogen = loadVideoGen(URI.createFileURI(inputFile));
+		
+		FileHelper.createOrResetFileObject(outputFile)
+		
+		
+		videogen.sequences.filter(Content).forEach[c|
+			var interfaces = c.class.interfaces;
+			
+			var uriToPrint = "";
+			
+			// Always include for mandatory
+			if(interfaces.contains(VideoSeqMandatory)){
+				var m = c as VideoSeqMandatory
+				
+				uriToPrint = m.videoseq.uri
+			}
+			// 50% of chances for optional
+			else if (interfaces.contains(VideoSeqOptional)){
+				var o = c as VideoSeqOptional
+				
+				if( Util.random(2) == 1 ) {
+					uriToPrint = o.videoseq.uri
+				}
+			}
+			// Select a random sequence
+			else if (interfaces.contains(Alternative)){
+				var a = c as Alternative
+				
+				var alternativesSize = a.sequences.filter(VideoSeq).size
+				var VideoSeq vs = a.sequences.filter(VideoSeq).get(Util.random(alternativesSize))
+				uriToPrint = vs.uri
+			}
+			
+			// Append to file
+			if(!uriToPrint.isNullOrEmpty){
+				var line = "file '" + uriToPrint + "'\n"
+				FileHelper.writeFileObject(outputFile, line)
+			}
+
+		]
+	}
+	
+		/**
+	 * Transforms a videoGen object to a playlist
+	 * 
+	 * @param videogen The videogen object
+	 */
+	private def static Playlist transformToPlaylist(VideoGen videogen){
+		
+		val playlistModel = PlaylistFactory.eINSTANCE;
+		
+		val playlist = playlistModel.createPlaylist()	
+				
+		videogen.sequences.filter(Content).forEach[c|
+			var interfaces = c.class.interfaces;
+			
+			var videoUri = "";
+			
+			// Always include for mandatory
+			if(interfaces.contains(VideoSeqMandatory)){
+				var m = c as VideoSeqMandatory
+				
+				videoUri = m.videoseq.uri
+			}
+			// 50% of chances for optional
+			else if (interfaces.contains(VideoSeqOptional)){
+				var o = c as VideoSeqOptional
+				
+				if( Util.random(2) == 1 ) {
+					videoUri = o.videoseq.uri
+				}
+			}
+			// Select a random sequence
+			else if (interfaces.contains(Alternative)){
+				var a = c as Alternative
+				
+				var alternativesSize = a.sequences.filter(VideoSeq).size
+				var VideoSeq vs = a.sequences.filter(VideoSeq).get(Util.random(alternativesSize))
+				videoUri = vs.uri
+			}
+			
+			// Append to file
+			if(!videoUri.isNullOrEmpty){
+				var video = playlistModel.createVideo()
+				video.uri = FileHelper.getAbsolutePath(videoUri)
+				video.durationInSeconds = FFMpegUtil.getFileDuration(video.uri).intValue
+				playlist.videos.add(video)
+			}
+
+		]
+		
+		return playlist
+	}
+	
+	
+	/**
+	 * Loads a videoGen object from a videoGen file given in an URI
+	 * @param uri URI of the .videogen file
+	 */
+	private def static loadVideoGen(URI uri) {
+		new VideoGenStandaloneSetupGenerated().createInjectorAndDoEMFRegistration;
+		var res = new ResourceSetImpl().getResource(uri, true);
+		res.contents.get(0) as VideoGen
+	}
+	
+
+}
+
+    Status API Training Shop Blog About Pricing 
+
+    © 2016 GitHub, Inc. Terms Privacy Security Contact Help 
+
